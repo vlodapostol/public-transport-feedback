@@ -1,6 +1,6 @@
 Team name: WEBabes
 
-Team topic: "Web application for sharing public transport experiences"
+Team topic: "Web Application for Sharing Public Transport Experiences"
 
 Team members: 
 
