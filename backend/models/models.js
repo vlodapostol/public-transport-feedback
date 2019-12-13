@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+
 const sequelize = new Sequelize('project_DB', 'root', 'p@ss', {
     dialect: 'mysql'
 });
@@ -79,10 +80,11 @@ Feedback.init({
         type: Sequelize.STRING
     },
     satisfactionLevel: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull:false
     }
 }, { sequelize, modelName: 'feedback' });
 
 sequelize.sync();
 
-module.exports = { sequelize, Feedback };
+module.exports = { sequelize, Feedback, User};
