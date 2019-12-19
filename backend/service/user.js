@@ -18,6 +18,45 @@ const user = {
         } catch(err) {
             throw new Error(err.message);
         } 
+    },
+    disable: async (id) => {
+        try {
+            let user = await User.findByPk(id);
+            user.disable = true;
+            await user.save();
+            
+            return user;
+        } catch(err) {
+            throw new Error(err.message);
+        }
+    },
+    enable: async (id) => {
+        try {
+            let user = await User.findByPk(id);
+            user.disable = false;
+            await user.save();
+            
+            return user;
+        } catch(err) {
+            throw new Error(err.message);
+        }
+    },
+    update: async (user) => {
+        
+        try{
+        let mUser = await User.findByPk(user.id);
+        
+        if(user.email) {
+            mUser.email = user.email;
+            
+            await mUser.save();
+        }
+        else{
+            throw new Error('Email field is empty');
+        }
+        } catch(err){
+            throw new Error(err.message);
+        }
     }
 }
 

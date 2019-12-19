@@ -24,11 +24,16 @@ User.init({
     },
     email: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique:true
     },
     password: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    isEnabled: {
+        type:Sequelize.BOOLEAN,
+        defaultValue: true
     }
 }, {sequelize, modelName:'user'});
 
@@ -84,6 +89,13 @@ Feedback.init({
         allowNull:false
     }
 }, { sequelize, modelName: 'feedback' });
+
+User.hasMany(Feedback, {
+    foreignKey: {
+        name: 'userId',
+        allowNull: false
+    }
+});
 
 sequelize.sync();
 
