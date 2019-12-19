@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "8b4b7dce-e9b4-4ca9-83df-befb43fcd5f7",
+		"name": "Project_WEBabes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"vlodel\",\r\n    \"email\": \"vlodel@gmail.com\",\r\n    \"password\": \"myPass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "18.224.15.254:3001/api/user",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "18.224.15.254:3001/api/user/1",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create feedback for a user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"crowdednessLevel\": \"MEDIUM\",\r\n\"departureHour\": 0,\r\n\"destinationPoint\": \"Piata Unirii\",\r\n\"observations\": \"rawrawr\",\r\n\"satisfactionLevel\": 2,\r\n\"startingPoint\": \"Piata Romana\",\r\n\"transportType\": \"METRO\",\r\n\"tripDuration\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "18.224.15.254:3001/api/user/1/feedback",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"user",
+						"1",
+						"feedback"
+					]
+				},
+				"description": "Creates a new feedback for the user with id 1"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all feedbacks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "18.224.15.254:3001/api/user/1/feedback",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"user",
+						"1",
+						"feedback"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the feedback with a certain id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "18.224.15.254:3001/api/feedback/2/delete",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"feedback",
+						"2",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create feedback for a user Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"crowdednessLevel\": \"MEDIUM\",\r\n\"departureHour\": 0,\r\n\"destinationPoint\": \"Piata Unirii\",\r\n\"observations\": \"rawrawr\",\r\n\"satisfactionLevel\": 2,\r\n\"startingPoint\": \"Piata Romana\",\r\n\"transportType\": \"METRO\",\r\n\"tripDuration\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "18.224.15.254:3001/api/user/1/feedback",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"user",
+						"1",
+						"feedback"
+					]
+				},
+				"description": "Creates a new feedback for the user with id 1"
+			},
+			"response": []
+		},
+		{
+			"name": "Update a feedback",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"id\": 2,\r\n        \"startingPoint\": \"Piata Romana\",\r\n        \"destinationPoint\": \"Piata Sudului\",\r\n        \"transportType\": \"METRO\",\r\n        \"departureHour\": \"00:00:00\",\r\n        \"tripDuration\": 0,\r\n        \"crowdednessLevel\": \"MEDIUM\",\r\n        \"observations\": \"rawrawr\",\r\n        \"satisfactionLevel\": 2,\r\n        \"userId\": 1\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "18.224.15.254:3001/api/feedback/2/update",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"feedback",
+						"2",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update the email of a user",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"username\": \"vlodel\",\r\n    \"email\": \"vlad@gmail.com\",\r\n    \"password\": \"myPass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "18.224.15.254:3001/api/user/1/update",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"user",
+						"1",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disable a user",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "18.224.15.254:3001/api/user/1/disable",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"user",
+						"1",
+						"disable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enable a user",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "18.224.15.254:3001/api/user/1/enable",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"user",
+						"1",
+						"enable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter feedbacks by startingPoint",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "18.224.15.254:3001/api/feedback/search/startingPoint/Piata Romana",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"feedback",
+						"search",
+						"startingPoint",
+						"Piata Romana"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter feedbacks by transportType",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "18.224.15.254:3001/api/feedback/search/transportType/METRO",
+					"host": [
+						"18",
+						"224",
+						"15",
+						"254"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"feedback",
+						"search",
+						"transportType",
+						"METRO"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

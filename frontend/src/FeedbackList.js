@@ -17,7 +17,7 @@ class FeedbackList extends React.Component{
         }
     }
 
-    
+                                                                            
     render() {
         const feedbacks = this.state.feedbacks.map((feedback, index) => 
             <div key={index}>
