@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8b4b7dce-e9b4-4ca9-83df-befb43fcd5f7",
+		"_postman_id": "d5e13cbc-bab2-4aa8-b167-d9b6440aae73",
 		"name": "Project_WEBabes",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -27,12 +27,9 @@
 					}
 				},
 				"url": {
-					"raw": "18.224.15.254:3001/api/user",
+					"raw": "localhost:3001/api/user",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -68,12 +65,9 @@
 					}
 				},
 				"url": {
-					"raw": "18.224.15.254:3001/api/user/1",
+					"raw": "localhost:3001/api/user/1",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -107,12 +101,9 @@
 					}
 				},
 				"url": {
-					"raw": "18.224.15.254:3001/api/user/1/feedback",
+					"raw": "localhost:3001/api/user/1/feedback",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -132,12 +123,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "18.224.15.254:3001/api/user/1/feedback",
+					"raw": "localhost:3001/api/user/1/feedback",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -156,12 +144,9 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "18.224.15.254:3001/api/feedback/2/delete",
+					"raw": "localhost:3001/api/feedback/2/delete",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -196,12 +181,9 @@
 					}
 				},
 				"url": {
-					"raw": "18.224.15.254:3001/api/user/1/feedback",
+					"raw": "localhost:3001/api/user/1/feedback",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -237,12 +219,9 @@
 					}
 				},
 				"url": {
-					"raw": "18.224.15.254:3001/api/feedback/2/update",
+					"raw": "localhost:3001/api/feedback/2/update",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -277,12 +256,9 @@
 					}
 				},
 				"url": {
-					"raw": "18.224.15.254:3001/api/user/1/update",
+					"raw": "localhost:3001/api/user/1/update",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -301,12 +277,9 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "18.224.15.254:3001/api/user/1/disable",
+					"raw": "localhost:3001/api/user/1/disable",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -325,12 +298,9 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "18.224.15.254:3001/api/user/1/enable",
+					"raw": "localhost:3001/api/user/1/enable",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -349,12 +319,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "18.224.15.254:3001/api/feedback/search/startingPoint/Piata Romana",
+					"raw": "localhost:3001/api/feedback/search/startingPoint/Piata Romana",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
@@ -374,12 +341,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "18.224.15.254:3001/api/feedback/search/transportType/METRO",
+					"raw": "localhost:3001/api/feedback/search/transportType/METRO",
 					"host": [
-						"18",
-						"224",
-						"15",
-						"254"
+						"localhost"
 					],
 					"port": "3001",
 					"path": [
