@@ -30,3 +30,12 @@
     transform: rotate(360deg);
   }
 }
+
+.h5 {
+  color:gray;
+  font-size: 16px;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.h5:hover {opacity: 1}

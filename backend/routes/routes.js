@@ -4,7 +4,8 @@ const router = express.Router();
 const userController = require('./../controller/user');
 const feedbackController = require('./../controller/feedback');
 
-router.post("/user", userController.createUser);
+router.post("/register", userController.createUser);
+router.post("/login", userController.authUser);
 router.get("/user/:id", userController.getUserById);
 router.put("/user/:id/update", userController.modifyUser);
 router.put("/user/:id/enable", userController.enableUser);

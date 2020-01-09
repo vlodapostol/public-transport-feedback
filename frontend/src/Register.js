@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
@@ -13,31 +14,40 @@ class Register extends React.Component {
         this.state={
             username:'',
             email:'',
-            password:''
+            password:'',
+            finishedRegistration: false
         };
     }
     
     handleClickRegister(event){
-        var apiUrl = "http://localhost:3001/api";
+        var apiUrl = "http://3.122.226.49:3001/api/register";
         var payload = {
             "username": this.state.username,
             "email": this.state.email,
             "password":this.state.password
         };
         
-        axios.post(apiUrl+'/register',payload)
+        axios.post(apiUrl,payload)
         .then((response) => {
             console.log(response);
-            if(response.data.code == 200){
+            console.log(response.status)
+            if(response.status == 201){
+                this.setState({
+                   finishedRegistration: true 
+                });
                 console.log("registered");
             }
-            else{
-                console.log("error on registration"+response.message);
-            }
-        })
+        }).catch((err) => {
+          console.log(err.message);  
+        });
     }
     
     render(){
+        
+        if(this.state.finishedRegistration===true){
+            return <Redirect to="/login" />
+        }
+        
         return (
       <div>
         <MuiThemeProvider>
@@ -64,7 +74,7 @@ class Register extends React.Component {
              onChange = {(event,newValue) => this.setState({password:newValue})}
              />
            <br/>
-           <RaisedButton label="Register" primary={true} style={style} onClick={(event) => this.handleClickRegister(event)}/>
+           <RaisedButton label="Register" primary={true} style={style} onClick={this.handleClickRegister}/>
           </div>
          </MuiThemeProvider>
       </div>

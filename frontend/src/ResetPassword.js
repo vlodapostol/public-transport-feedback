@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Redirect } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
@@ -11,20 +12,23 @@ class ResetPassword extends React.Component{
         super(props);
         this.state={
             code:"",
-            newPassword:""
+            newPassword:"", 
+            toLogin:false
         };
     }
     
-    handleResetClick(event){
-        
-    }
     
     render(){
+        
+        if(this.state.toLogin === true){
+            return <Redirect to='/login'/>
+        }
+        
         return(
             <div>
                 <MuiThemeProvider>
                     <div>
-                        <AppBar title="Password Recovery" showMenuIconButton={false}/>
+                        <AppBar title="Reset password" showMenuIconButton={false}/>
                             <TextField 
                             hintText="Enter received code"
                             floatingLabelText="Code"
@@ -38,7 +42,7 @@ class ResetPassword extends React.Component{
                             onChange = {(event,newValue) => this.setState({password:newValue})}
                             />
                             <br/>
-                            <RaisedButton label="Reset" primary={true} style={style} onClick={(event) => this.handleResetClick(event)}/>
+                            <RaisedButton label="Reset" primary={true} style={style} onClick={(event) => this.setState({toLogin:true})}/>
                     </div>
                 </MuiThemeProvider>
             </div>    

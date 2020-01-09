@@ -7,51 +7,60 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 import axios from 'axios';
+import './App.css';
 
 class Login extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            username:'',
-            password:'',
-            toRegister:false
-        }
+        console.log(props);
+        this.state = {
+            username: '',
+            password: '',
+            toRegister: false,
+            toResetPassword: false,
+        };
     }
     
-    handleLoginClick(event){
-        var apiUrl = "http://localhost:3001/api";
+    handleLoginClick(event) {
+        var apiUrl = "http://3.122.226.49:3001/api/login";
+        console.log(this);
         var payload = {
-            "username":this.state.username,
-            "password":this.state.password
-        }
-        axios.post(apiUrl+"/login", payload)
-        .then(function (response){
-            console.log(response);
-            if(response.data.code == 200){
-                console.log("Login successful");
-                return <Redirect to='/' />
-            }
-            else{
-                console.log("Login error: "+response.message);
-            }
-        })
-        
+            "username": this.state.username,
+            "password": this.state.password
+        };
+        axios.post(apiUrl, payload)
+            .then((response) => {
+                console.log(response);
+                console.log(this.props);
+                if (response.status == 200) {
+                    this.props.onAuth(true);
+                    console.log("Login successful");
+                } else {
+                    this.props.onAuth(false);
+                }
+            }).catch(err => {
+                console.log(err.message);
+                this.props.onAuth(false); 
+            });
+
     }
-    
-    handleRegisterClick(event){
-        console.log('awadwda')
-        //  return  <Redirect  to="/register" />
-        this.setState = ({toRegister:true});
-    }
-    
+
     render() {
-        if(this.state.toRegister===true){
-            return <Redirect to='/register' />
+
+        if (this.state.authSuccessful === true) {
+            return <Redirect to='/' />
         }
-        
-        
+
+        if (this.state.toRegister === true) {
+            return <Redirect to='/register' />;
+        }
+
+        if (this.state.toResetPassword === true) {
+            return <Redirect to='/resetpassword' />;
+        }
+
         return (
-        <div>
+            <div>
             <MuiThemeProvider>
                 <div>
                 <AppBar title="Login" showMenuIconButton={false}/>
@@ -70,6 +79,8 @@ class Login extends React.Component {
                     <br/>
                     <RaisedButton label="Login" primary={true} style={style} onClick={(event) => this.handleLoginClick(event)}/>
                     <RaisedButton label="Register" primary={true} style={style} onClick={(event) => this.setState({toRegister:true})}/>
+                    <br/>
+                    <h5 className="h5" onClick={(event) => this.setState({toResetPassword:true})}>Reset your password</h5>
                 </div>
             </MuiThemeProvider>
         </div>
@@ -77,8 +88,8 @@ class Login extends React.Component {
     }
 }
 
-    const style = {
-        margin:15
-    };
+const style = {
+    margin: 15
+};
 
 export default Login;

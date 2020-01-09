@@ -10,6 +10,18 @@ const user = {
             throw new Error(err.message);
         }
     },
+    authUser: async(user,pass) => {
+      try {
+          const result = await User.findOne({where: {
+              username: user,
+              password: pass
+          }});
+          
+          return result;
+      } catch(err) {
+          throw new Error(err.message);
+      }
+    },
     getById: async (id) => {
         try {
             const result = await User.findByPk(id);

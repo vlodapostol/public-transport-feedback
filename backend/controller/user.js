@@ -81,11 +81,29 @@ const modifyUser = async(request,response,next)=>{
         });
     }
 }
+
+const authUser = async(request,response,next)=>{
+    try{
+        const user = request.body;
+        console.log(user);
+        const responseUser = await userService.authUser(user.username, user.password);
+        if(user.username===responseUser.username){
+            response.status(200).json({
+                message: 'user auth succesfull'
+            });
+        }
+    } catch(err){
+        response.status(404).json({
+            message: 'user not found' + err.message
+        });
+    }
+}
         
 module.exports = {
     createUser,
     getUserById,
     enableUser,
     disableUser,
-    modifyUser
+    modifyUser,
+    authUser
 }
