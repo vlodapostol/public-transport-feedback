@@ -68,9 +68,10 @@ class AddFeedback extends React.Component {
     addFeedback = () => {
         const feedback = this.state;
 
-        axios.post('http://3.133.100.81:3001/api/feedback', feedback)
+        axios.post('http://3.122.226.49:3001/api/user/1/feedback', feedback)
             .then(res => {
                 this.props.onFeedbackAdded(feedback);
+                console.log('feedback added succesfully');
             })
             .catch(err => {
                 console.log(err);

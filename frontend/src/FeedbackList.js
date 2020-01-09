@@ -6,10 +6,10 @@ class FeedbackList extends React.Component{
         this.state = {
             feedbacks: []
         };
-        
     }
     
     componentDidUpdate = (prevProps) => {
+        console.log('component update');
         if(prevProps.feedbacks.length !== this.props.feedbacks.length) {
             this.setState({
                 feedbacks: this.props.feedbacks
