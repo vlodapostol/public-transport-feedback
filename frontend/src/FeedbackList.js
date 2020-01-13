@@ -1,34 +1,35 @@
 import React from 'react';
 import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+}
+from 'material-ui/Table';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-class FeedbackList extends React.Component{
+class FeedbackList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             feedbacks: props.feedbacks
         };
     }
-    
+
     componentDidUpdate = (prevProps) => {
-        if(prevProps.feedbacks.length !== this.props.feedbacks.length) {
+        if (prevProps.feedbacks.length !== this.props.feedbacks.length) {
             this.setState({
                 feedbacks: this.props.feedbacks
             })
         }
     }
 
-                                                                            
+
     render() {
-        const feedbacks = this.state.feedbacks.map((feedback, index) => 
-                <TableRow>
+        const feedbacks = this.state.feedbacks.map((feedback, index) =>
+            <TableRow>
                     <TableRowColumn><span>{feedback.id}</span></TableRowColumn>
                     <TableRowColumn><span>{feedback.startingPoint}</span></TableRowColumn>
                     <TableRowColumn><span>{feedback.destinationPoint}</span></TableRowColumn>
@@ -39,8 +40,8 @@ class FeedbackList extends React.Component{
                     <TableRowColumn><span>{feedback.observations}</span></TableRowColumn>
                     <TableRowColumn><span>{feedback.satisfactionLevel}</span></TableRowColumn>
                 </TableRow>
-          );
-        
+        );
+
         return (
             <div>
             <MuiThemeProvider>
@@ -64,7 +65,7 @@ class FeedbackList extends React.Component{
                 </Table>
           </MuiThemeProvider>
           </div>
-            );
+        );
     }
 }
 

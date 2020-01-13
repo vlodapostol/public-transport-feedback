@@ -1,17 +1,18 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import axios from "axios"; 
+import axios from "axios";
 
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TimePicker from 'material-ui/TimePicker';
+import IconButton from 'material-ui/IconButton';
 
 var Rating = require('react-rating');
 
-class CreateFeedback extends React.Component{
-    
+class CreateFeedback extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -88,21 +89,23 @@ class CreateFeedback extends React.Component{
             })
     }
 
-    
+
     handleChangeTimePicker24 = (event, date) => {
-        this.setState({value24: date});  
+        this.setState({ value24: date });
     };
-    
-    render(){
-        return(
+
+    render() {
+        return (
             <div>
             <MuiThemeProvider>
             <div>
                 <AppBar 
                     title='Add a Feedback' showMenuIconButton={false} />
                 <TextField hintText="Add Starting Point" />
+                <br/>
                 <TextField hintText="Add Destination Point" />
-                <SelectField floatingLabelText="Add Transport Type" 
+                <br/>
+                <SelectField hintText="Select Transport Type" 
                 value = {this.state.value } 
                 onChange={this.handleChange} >
                 
@@ -116,9 +119,11 @@ class CreateFeedback extends React.Component{
                 hintText="Add Departure Hour"
                 value={this.state.value24}
                 onChange={this.handleChangeTimePicker24} />
+                <br/>
                 <TextField hintText="Add Trip Duration" />
+                <br/>
                 <SelectField 
-                floatingLabelText="Add Crowdedness Level" 
+                hintText="Add Crowdedness Level" 
                 value = {this.state.value} 
                 onChange={this.handleChange} >
                 
@@ -126,23 +131,33 @@ class CreateFeedback extends React.Component{
                 <MenuItem value={2} primaryText="MEDIUM" />
                 <MenuItem value={3} primaryText="HIGH" />
                 </SelectField>
+                <br/>
                 <TextField hintText="Add Observations" />
-                <Rating 
-                start={1} 
-                stop={3} 
-                step={1} 
-                initialRating={0} >
-                {/* TO DO: incearca sa downloadezi imaginile, salvezi in proiect */}
-                <img src="https://img.icons8.com/dusk/64/000000/sad.png"/>, 
-                <img src="https://img.icons8.com/dusk/64/000000/neutral-emoticon.png"/>, 
-                <img src="https://img.icons8.com/dusk/64/000000/happy.png"/> ]} 
-
-                </Rating>
             </div>
+            
+                        <div>
+    <IconButton tooltip="Sad" touch={true} tooltipPosition="bottom-right" style={style}>
+      <img src="https://img.icons8.com/dusk/64/000000/sad.png" alt ="Sad"/>
+    </IconButton>
+    <IconButton tooltip="Neutral" touch={true} tooltipPosition="bottom-center" style={style}>
+      <img src="https://img.icons8.com/dusk/64/000000/neutral-emoticon.png" alt ="Neutral"/>
+    </IconButton>
+    <IconButton tooltip="Happy" touch={true} tooltipPosition="bottom-left" style={style}>
+      <img src="https://img.icons8.com/dusk/64/000000/happy.png" alt ="Happy"/>
+    </IconButton>
+   
+  </div>
             </MuiThemeProvider>
-            </div>
+            
+
+             
+        </div>
         );
     }
 }
+
+const style = {
+    margin: 15
+};
 
 export default CreateFeedback;

@@ -1,57 +1,91 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import AppBar from 'material-ui/AppBar';
 
-class ResetPassword extends React.Component{
-    constructor(props){
+import axios from 'axios';
+
+const ip = "18.197.27.165"
+
+class Register extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
-            code:"",
-            newPassword:"", 
-            toLogin:false
+        this.state = {
+            username: '',
+            email: '',
+            password: '',
+            finishedRegistration: false
         };
     }
-    
-    
-    render(){
-        
-        if(this.state.toLogin === true){
-            return <Redirect to='/login'/>
+
+    handleClickRegister(event) {
+        var apiUrl = "http://" + ip + ":3001/api/register";
+        var payload = {
+            "username": this.state.username,
+            "email": this.state.email,
+            "password": this.state.password
+        };
+
+        axios.post(apiUrl, payload)
+            .then((response) => {
+                console.log(response);
+                console.log(response.status)
+                if (response.status == 201) {
+                    this.setState({
+                        finishedRegistration: true
+                    });
+                    console.log("registered");
+                }
+            }).catch((err) => {
+                console.log(err.message);
+            });
+    }
+
+    render() {
+
+        if (this.state.finishedRegistration === true) {
+            return <Redirect to="/login" />
         }
-        
-        return(
+
+        return (
             <div>
-                <MuiThemeProvider>
-                    <div>
-                        <AppBar title="Reset password" showMenuIconButton={false}/>
-                            <TextField 
-                            hintText="Enter received code"
-                            floatingLabelText="Code"
-                            onChange = {(event,newValue) => this.setState({code:newValue})}
-                            />
-                            <br/>
-                            <TextField 
-                            type="password"
-                            hintText="Enter a new password"
-                            floatingLabelText="New password"
-                            onChange = {(event,newValue) => this.setState({password:newValue})}
-                            />
-                            <br/>
-                            <RaisedButton label="Reset" primary={true} style={style} onClick={(event) => this.setState({toLogin:true})}/>
-                    </div>
-                </MuiThemeProvider>
-            </div>    
+        <MuiThemeProvider>
+          <div>
+          <AppBar
+             title="Register" showMenuIconButton={false}/>
+           <TextField
+             hintText="Enter username"
+             floatingLabelText="Username"
+             onChange = {(event,newValue) => this.setState({username:newValue})}
+             />
+           <br/>
+           <TextField
+             hintText="Enter email"
+             type="email"
+             floatingLabelText="Email"
+             onChange = {(event,newValue) => this.setState({email:newValue})}
+             />
+           <br/>
+           <TextField
+             type = "password"
+             hintText="Enter password"
+             floatingLabelText="Password"
+             onChange = {(event,newValue) => this.setState({password:newValue})}
+             />
+           <br/>
+           <RaisedButton label="Register" primary={true} style={style} onClick={this.handleClickRegister}/>
+          </div>
+         </MuiThemeProvider>
+      </div>
         );
     }
 }
 
 const style = {
-    margin:15
+    margin: 15
 };
 
-export default ResetPassword;
+export default Register;

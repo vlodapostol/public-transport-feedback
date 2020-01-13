@@ -5,9 +5,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import App from './App';
 
 import axios from 'axios';
 import './App.css';
+
+const ip = "18.197.27.165"
 
 class Login extends React.Component {
     constructor(props) {
@@ -18,29 +21,27 @@ class Login extends React.Component {
             password: '',
             toRegister: false,
             toResetPassword: false,
+            loggedIn: this.props.location.state.loggedIn,
+            authSuccessful: false
         };
+        this.onUsernameChange = this.props.location.userNameCallback;
     }
-    
+
     handleLoginClick(event) {
-        var apiUrl = "http://3.122.226.49:3001/api/login";
-        console.log(this);
+        var apiUrl = "http://" + ip + ":3001/api/login";
         var payload = {
             "username": this.state.username,
             "password": this.state.password
         };
         axios.post(apiUrl, payload)
             .then((response) => {
-                console.log(response);
-                console.log(this.props);
                 if (response.status == 200) {
-                    this.props.onAuth(true);
-                    console.log("Login successful");
-                } else {
-                    this.props.onAuth(false);
+                    console.log(this.state.username)
+                    this.onUsernameChange(this.state.username);
+                    this.setState({ authSuccessful: true })
                 }
             }).catch(err => {
                 console.log(err.message);
-                this.props.onAuth(false); 
             });
 
     }

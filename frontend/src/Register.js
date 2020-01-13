@@ -8,48 +8,50 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import axios from 'axios';
 
+const ip = "18.197.27.165"
+
 class Register extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            username:'',
-            email:'',
-            password:'',
+        this.state = {
+            username: '',
+            email: '',
+            password: '',
             finishedRegistration: false
         };
     }
-    
-    handleClickRegister(event){
-        var apiUrl = "http://3.122.226.49:3001/api/register";
+
+    handleClickRegister(event) {
+        var apiUrl = "http://" + ip + ":3001/api/register";
         var payload = {
             "username": this.state.username,
             "email": this.state.email,
-            "password":this.state.password
+            "password": this.state.password
         };
-        
-        axios.post(apiUrl,payload)
-        .then((response) => {
-            console.log(response);
-            console.log(response.status)
-            if(response.status == 201){
-                this.setState({
-                   finishedRegistration: true 
-                });
-                console.log("registered");
-            }
-        }).catch((err) => {
-          console.log(err.message);  
-        });
+
+        axios.post(apiUrl, payload)
+            .then((response) => {
+                console.log(response);
+                console.log(response.status)
+                if (response.status == 201) {
+                    this.setState({
+                        finishedRegistration: true
+                    });
+                    console.log("registered");
+                }
+            }).catch((err) => {
+                console.log(err.message);
+            });
     }
-    
-    render(){
-        
-        if(this.state.finishedRegistration===true){
+
+    render() {
+
+        if (this.state.finishedRegistration === true) {
             return <Redirect to="/login" />
         }
-        
+
         return (
-      <div>
+            <div>
         <MuiThemeProvider>
           <div>
           <AppBar
@@ -78,12 +80,12 @@ class Register extends React.Component {
           </div>
          </MuiThemeProvider>
       </div>
-    );
-  }
+        );
+    }
 }
 
 const style = {
-    margin:15
+    margin: 15
 };
 
 export default Register;
