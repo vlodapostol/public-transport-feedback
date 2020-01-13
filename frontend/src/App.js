@@ -10,6 +10,8 @@ import CreateFeedback from './CreateFeedback'
 import Loggin from './Loggin'
 import Dashboard from './Dashboard'
 
+import { Helmet } from "react-helmet";
+
 import axios from 'axios';
 import {
   BrowserRouter as Router,
@@ -33,8 +35,6 @@ import IconButton from 'material-ui/IconButton';
 
 const ip = "52.59.237.162"
 
-const UsernameContext = React.createContext('');
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +42,7 @@ class App extends Component {
       feedbacks: [],
       drawerOpen: false,
       loggedIn: false,
-      username: '',
+      username: 'Guest',
     };
   }
 
@@ -66,7 +66,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    axios.get('http://' + ip + ':3001/api/user/1/feedback')
+    axios.get('http://' + ip + ':3001/api/feedback/getall')
       .then(feedbacks => {
         this.setState({
           feedbacks: feedbacks.data
@@ -77,15 +77,18 @@ class App extends Component {
   signOutUser = () => {
     this.setState({
       loggedIn: false,
-      username: ''
+      username: 'Guest'
     })
   }
 
   render() {
     return (
       <div className="App" id='app'>
+        <Helmet>
+          <title>Our wonderful app</title>
+        </Helmet>
+      
         <Router>
-         <UsernameContext.Provider value={this.state.username}>
           <Switch>
             <Route path="/login" component={Login} onUsernameChange={this.onUsernameChange} />
             <Route path='/addFeedback' component ={CreateFeedback} />
@@ -95,13 +98,15 @@ class App extends Component {
               <SearchedResult feedbackList={this.state.feedbacks} keywords='blue submarine' />
             </Route>
             <Route path="/" render={() => <Dashboard 
-             feedbacks={this.state.feedbacks}
-             signOutUser={this.signOutUser}
-             onUsernameChange={this.onUsernameChange}
-             loggedIn={this.state.loggedIn}/>}
-              />
+                         feedbacks={this.state.feedbacks}
+                         onFeedbackAdded={this.onFeedbackAdded}
+                         signOutUser={this.signOutUser}
+                         onUsernameChange={this.onUsernameChange}
+                         loggedIn={this.state.loggedIn}
+                         username={this.state.username}/>
+            }
+            />
           </Switch>
-         </UsernameContext.Provider>
         </Router>
       </div>
     );

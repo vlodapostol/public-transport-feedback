@@ -8,8 +8,13 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TimePicker from 'material-ui/TimePicker';
 import IconButton from 'material-ui/IconButton';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import { Redirect } from 'react-router-dom';
 
 var Rating = require('react-rating');
+
+const ip = "52.59.237.162";
 
 class CreateFeedback extends React.Component {
 
@@ -23,134 +28,98 @@ class CreateFeedback extends React.Component {
             tripDuration: 0,
             crowdednessLevel: '',
             observations: '',
-            satisfactionLevel: 0
+            satisfactionLevel: 0,
+            author: this.props.location.state.username,
+            rawDate: 0,
+            redirectToDashboard: false
         };
+        this.onFeedbackAdded = this.props.location.feedbackAddedHandler;
     }
 
-    handleChangeStartingPoint = (event) => {
-        this.setState({
-            startingPoint: event.target.value
-        });
-    }
+    handleChangeDepartureHour = (ev, date) => {
+        let mdate = new Date(date);
+        let fdate = mdate.getHours() + ':' + mdate.getMinutes();
 
-    handleChangeDestinationPoint = (event) => {
         this.setState({
-            destinationPoint: event.target.value
-        });
-    }
-
-    handleChangeTransportType = (event) => {
-        this.setState({
-            transportType: event.target.value
-        });
-    }
-
-    handleChangeDepartureHour = (event) => {
-        this.setState({
-            departureHour: 0
-        });
-    }
-
-    handleChangeTripDuration = (event) => {
-        this.setState({
-            tripDuration: 0
-        });
-    }
-
-    handleChangeCrowdednessLevel = (event) => {
-        this.setState({
-            crowdednessLevel: event.target.value
-        });
-    }
-
-    handleChangeObservations = (event) => {
-        this.setState({
-            observations: event.target.value
-        });
-    }
-
-    handleChangeSatisfactionLevel = (event) => {
-        this.setState({
-            satisfactionLevel: parseInt(event.target.value)
+            departureHour: fdate,
+            rawDate: date
         });
     }
 
     // adds feedback
     addFeedback = () => {
         const feedback = this.state;
-
-        axios.post('http://3.122.226.49:3001/addFeedback', feedback)
+        axios.post('http://' + ip + ':3001/api/user/' + this.state.author + '/feedback', feedback)
             .then(res => {
-                this.props.onFeedbackAdded(feedback);
+                this.onFeedbackAdded(feedback);
                 console.log('feedback added succesfully');
+                this.setState({ redirectToDashboard: true });
             })
             .catch(err => {
-                console.log(err);
+                console.log(err.message);
             })
     }
 
-
-    handleChangeTimePicker24 = (event, date) => {
-        this.setState({ value24: date });
-    };
-
     render() {
+        if (redirectToDashboard) {
+            <Redirect to='/' />
+        }
+
         return (
             <div>
             <MuiThemeProvider>
             <div>
                 <AppBar 
                     title='Add a Feedback' showMenuIconButton={false} />
-                <TextField hintText="Add Starting Point" />
+                <TextField hintText="Add Starting Point" onChange={(ev, value) => {this.setState({startingPoint: value})}} />
                 <br/>
-                <TextField hintText="Add Destination Point" />
+                <TextField hintText="Add Destination Point" onChange={(ev, value) => {this.setState({destinationPoint: value})}} />
                 <br/>
-                <SelectField hintText="Select Transport Type" 
-                value = {this.state.value } 
-                onChange={this.handleChange} >
-                
-                <MenuItem value={1} primaryText="BUS" />
-                <MenuItem value={2} primaryText="METRO" />
-                <MenuItem value={3} primaryText="TRAM" />
+                <SelectField 
+                hintText="Select Transport Type" 
+                value = {this.state.transportType } >
+                <MenuItem value={'BUS'} primaryText="BUS" onClick={(ev) => {this.setState({transportType: 'BUS'})}} />
+                <MenuItem value={'METRO'} primaryText="METRO" onClick={(ev) => {this.setState({transportType: 'METRO'})}} />
+                <MenuItem value={'TRAM'} primaryText="TRAM" onClick={(ev) => {this.setState({transportType: 'TRAM'})}} />
                 </SelectField>
                 <br/>
                 <TimePicker 
+                ref='timePicker'
                 format="24hr"
                 hintText="Add Departure Hour"
-                value={this.state.value24}
-                onChange={this.handleChangeTimePicker24} />
+                autoOk={true}
+                value={this.state.rawDate}
+                onChange={this.handleChangeDepartureHour} />
                 <br/>
-                <TextField hintText="Add Trip Duration" />
+                <TextField hintText="Add Trip Duration" onChange={(ev, value) => {this.setState({tripDuration: value})}} />
                 <br/>
                 <SelectField 
                 hintText="Add Crowdedness Level" 
-                value = {this.state.value} 
-                onChange={this.handleChange} >
-                
-                <MenuItem value={1} primaryText="LOW" />
-                <MenuItem value={2} primaryText="MEDIUM" />
-                <MenuItem value={3} primaryText="HIGH" />
+                value = {this.state.crowdednessLevel} >
+                <MenuItem value={'LOW'} primaryText="LOW" onClick={(ev) => {this.setState({crowdednessLevel: 'LOW'})}} />
+                <MenuItem value={'MEDIUM'} primaryText="MEDIUM" onClick={(ev) => {this.setState({crowdednessLevel: 'MEDIUM'})}} />
+                <MenuItem value={'HIGH'} primaryText="HIGH" onClick={(ev) => {this.setState({crowdednessLevel: 'HIGH'})}} />
                 </SelectField>
                 <br/>
-                <TextField hintText="Add Observations" />
+                <TextField hintText="Add Observations" onChange={(ev, value) => {this.setState({observations: value})}}/>
             </div>
             
-                        <div>
-    <IconButton tooltip="Sad" touch={true} tooltipPosition="bottom-right" style={style}>
-      <img src="https://img.icons8.com/dusk/64/000000/sad.png" alt ="Sad"/>
-    </IconButton>
-    <IconButton tooltip="Neutral" touch={true} tooltipPosition="bottom-center" style={style}>
-      <img src="https://img.icons8.com/dusk/64/000000/neutral-emoticon.png" alt ="Neutral"/>
-    </IconButton>
-    <IconButton tooltip="Happy" touch={true} tooltipPosition="bottom-left" style={style}>
-      <img src="https://img.icons8.com/dusk/64/000000/happy.png" alt ="Happy"/>
-    </IconButton>
-   
-  </div>
-            </MuiThemeProvider>
+            <div style={{margin: '0px 0px 0px -45px'}}>
+                <IconButton onClick={(ev) => {this.setState({satisfactionLevel: 1})}} tooltip="Sad" touch={true} tooltipPosition="bottom-right" style={style}>
+                    <img src="https://img.icons8.com/dusk/64/000000/sad.png" alt ="Sad"/>
+                </IconButton>
+                <IconButton onClick={(ev) => {this.setState({satisfactionLevel: 2})}} tooltip="Neutral" touch={true} tooltipPosition="bottom-center" style={style}>
+                    <img src="https://img.icons8.com/dusk/64/000000/neutral-emoticon.png" alt ="Neutral"/>
+                </IconButton>
+                <IconButton onClick={(ev) => {this.setState({satisfactionLevel: 3})}} tooltip="Happy" touch={true} tooltipPosition="bottom-left" style={style}>
+                    <img src="https://img.icons8.com/dusk/64/000000/happy.png" alt ="Happy"/>
+                </IconButton>
+            </div>
             
-
-             
+            <div>
+                <RaisedButton label='Add feedback' style={{margin: '10px 0px'}} onClick={this.addFeedback}/>
+            </div>
+            </MuiThemeProvider>
         </div>
         );
     }

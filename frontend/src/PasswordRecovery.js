@@ -8,20 +8,18 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
 
+import axios from 'axios';
+
 var validator = require("email-validator");
 
-const send = require('gmail-send')({
-    user: 'vladdapostol@gmail.com',
-    pass: 'pwivwegaljfshmlj',
-    to: 'user@gmail.com',
-    subject: 'test subject',
-});
+const ip = "52.59.237.162"
 
 class PasswordRecovery extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
+            codeSent: false,
             code: '',
             recoverClicked: false
         };
@@ -37,11 +35,22 @@ class PasswordRecovery extends React.Component {
     render() {
 
         if (this.state.recoverClicked === true && validator.validate(this.state.email)) {
-            let randomCode = Math.floor(Math.random() * 100000);
 
+            var apiUrl = "http://" + ip + ":3001/api/resetpassword";
+            var payload = {
+                "email": this.state.email
+            }
+            axios.post(apiUrl, payload)
+                .then((response) => {
+                    console.log(response);
+                    if (response.status == 200) {
+                        this.setState({ codeSent: true })
+                        return <ResetPassword/>
+                    }
+                }).catch(err => {
+                    console.log(err.message);
+                });
 
-
-            return <ResetPassword/>
         }
 
         return (

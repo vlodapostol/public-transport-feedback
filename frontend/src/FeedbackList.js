@@ -30,7 +30,7 @@ class FeedbackList extends React.Component {
     render() {
         const feedbacks = this.state.feedbacks.map((feedback, index) =>
             <TableRow>
-                    <TableRowColumn><span>{feedback.id}</span></TableRowColumn>
+                    <TableRowColumn><span>{feedback.author}</span></TableRowColumn>
                     <TableRowColumn><span>{feedback.startingPoint}</span></TableRowColumn>
                     <TableRowColumn><span>{feedback.destinationPoint}</span></TableRowColumn>
                     <TableRowColumn><span>{feedback.transportType}</span></TableRowColumn>
@@ -48,7 +48,7 @@ class FeedbackList extends React.Component {
                 <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderColumn>ID</TableHeaderColumn>
+                        <TableHeaderColumn>Author</TableHeaderColumn>
                         <TableHeaderColumn>Starting Point</TableHeaderColumn>
                         <TableHeaderColumn>Destination Point</TableHeaderColumn>
                         <TableHeaderColumn>Transport Type</TableHeaderColumn>

@@ -23,8 +23,10 @@ class Dashboard extends React.Component {
             loggedIn: props.loggedIn,
             drawerOpen: false,
             feedbacks: props.feedbacks,
-            redirectToAdd: true
+            redirectToAdd: false,
+            username: this.props.username
         }
+        this.onFeedbackAdded = props.onFeedbackAdded;
         this.onUsernameChange = props.onUsernameChange;
         this.signOutUser = props.signOutUser;
     }
@@ -56,7 +58,11 @@ class Dashboard extends React.Component {
         }
 
         if (this.state.redirectToAdd) {
-            return <Redirect to='/addFeedback' />
+            return <Redirect to={{
+                pathname: '/addFeedback',
+                state: {username: this.state.username},
+                feedbackAddedHandler: this.onFeedbackAdded
+            }}/>
         }
 
         return (

@@ -12,7 +12,10 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "gmail-send": "^1.8.10",
     "mysql2": "^2.0.2",
+    "nodemailer": "^6.4.2",
+    "sendmail": "^1.6.1",
     "sequelize": "^5.21.3"
   },
   "devDependencies": {

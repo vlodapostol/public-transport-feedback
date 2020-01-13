@@ -26,17 +26,17 @@ User.init({
     email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique:true
+        unique: true
     },
     password: {
         type: Sequelize.STRING,
         allowNull: false
     },
     isEnabled: {
-        type:Sequelize.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         defaultValue: true
     }
-}, {sequelize, modelName:'user'});
+}, { sequelize, modelName: 'user' });
 
 class Feedback extends Sequelize.Model {};
 Feedback.init({
@@ -87,7 +87,11 @@ Feedback.init({
     },
     satisfactionLevel: {
         type: Sequelize.INTEGER,
-        allowNull:false
+        allowNull: false
+    },
+    author: {
+        type: Sequelize.STRING,
+        alowNull: false
     }
 }, { sequelize, modelName: 'feedback' });
 
@@ -100,4 +104,4 @@ User.hasMany(Feedback, {
 
 sequelize.sync();
 
-module.exports = { sequelize, Feedback, User};
+module.exports = { sequelize, Feedback, User };
