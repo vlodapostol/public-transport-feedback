@@ -8,7 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import axios from 'axios';
 
-const ip = "18.197.27.165"
+const ip = "52.59.237.162"
 
 class Register extends React.Component {
     constructor(props) {

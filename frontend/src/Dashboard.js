@@ -7,20 +7,14 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import FeedbackList from './FeedbackList';
 import Loggin from './Loggin';
+import LoggedIn from './LoggedIn';
 
-const Logged = (props) => (
-    <IconMenu
-      {...props}
-      iconButtonElement={<IconButton><MoreVertIcon color='white' /></IconButton>}
-    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-    anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-    <MenuItem primaryText="Settings" />
-    <MenuItem primaryText="Sign out" />
-  </IconMenu>
-);
+import { Redirect } from 'react-router-dom';
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -28,9 +22,11 @@ class Dashboard extends React.Component {
         this.state = {
             loggedIn: props.loggedIn,
             drawerOpen: false,
-            feedbacks: props.feedbacks
+            feedbacks: props.feedbacks,
+            redirectToAdd: true
         }
         this.onUsernameChange = props.onUsernameChange;
+        this.signOutUser = props.signOutUser;
     }
 
     openDrawer = (event) => {
@@ -48,22 +44,43 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        const fabStyle = {
+            margin: '5px 15px 0px 0px',
+            float: 'right'
+        };
+
+        let myFeedbacks = '';
+
+        if (this.state.loggedIn) {
+            myFeedbacks = <MenuItem onClick={() => {}}>Show my feedbacks</MenuItem>;
+        }
+
+        if (this.state.redirectToAdd) {
+            return <Redirect to='/addFeedback' />
+        }
+
         return (
             <div>
             <MuiThemeProvider>
                 <div>
                   <AppBar 
                     title='Feedbacks' 
-                    iconElementRight={this.state.loggedIn ? <Logged /> : <Loggin onUsernameChange={this.onUsernameChange} loggedIn={this.state.loggedIn} />}
+                    iconElementRight={this.state.loggedIn ? <LoggedIn signOutUser={() => {
+                      this.signOutUser();
+                      window.location.reload(); 
+                    }} /> : <Loggin onUsernameChange={this.onUsernameChange} loggedIn={this.state.loggedIn} />}
                     onLeftIconButtonClick={this.openDrawer} />
                   <Drawer 
                     open={this.state.drawerOpen}
                     docked={false}
                     width={200}
                     onRequestChange={(drawerOpen) => this.setState({drawerOpen})}>
-                    <MenuItem>First item</MenuItem>
-                    <MenuItem>Second item</MenuItem>
+                    <MenuItem>Add feedback</MenuItem>
+                    {myFeedbacks}
                   </Drawer>
+                  <FloatingActionButton style={fabStyle} onClick={(ev) => {this.setState({redirectToAdd: true})}}>
+                    <ContentAdd />
+                  </FloatingActionButton>
                 </div>
               </MuiThemeProvider>
               <FeedbackList feedbacks={this.state.feedbacks} />

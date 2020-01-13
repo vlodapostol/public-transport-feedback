@@ -22,7 +22,7 @@ class Register extends React.Component {
     }
 
     handleClickRegister(event) {
-        var apiUrl = "http://" + ip + ":3001/api/register";
+        var apiUrl = "http://" + ip + ":3001/api/resetpassword";
         var payload = {
             "username": this.state.username,
             "email": this.state.email,
@@ -55,18 +55,11 @@ class Register extends React.Component {
         <MuiThemeProvider>
           <div>
           <AppBar
-             title="Register" showMenuIconButton={false}/>
+             title="Reset password" showMenuIconButton={false}/>
            <TextField
-             hintText="Enter username"
-             floatingLabelText="Username"
+             hintText="Enter code"
+             floatingLabelText="Code"
              onChange = {(event,newValue) => this.setState({username:newValue})}
-             />
-           <br/>
-           <TextField
-             hintText="Enter email"
-             type="email"
-             floatingLabelText="Email"
-             onChange = {(event,newValue) => this.setState({email:newValue})}
              />
            <br/>
            <TextField
@@ -76,7 +69,7 @@ class Register extends React.Component {
              onChange = {(event,newValue) => this.setState({password:newValue})}
              />
            <br/>
-           <RaisedButton label="Register" primary={true} style={style} onClick={this.handleClickRegister}/>
+           <RaisedButton label="Reset" primary={true} style={style} onClick={this.handleClickReset}/>
           </div>
          </MuiThemeProvider>
       </div>

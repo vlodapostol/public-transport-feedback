@@ -31,7 +31,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 
-const ip = "18.197.27.165"
+const ip = "52.59.237.162"
 
 const UsernameContext = React.createContext('');
 
@@ -43,7 +43,6 @@ class App extends Component {
       drawerOpen: false,
       loggedIn: false,
       username: '',
-      authSuccessful: false
     };
   }
 
@@ -75,10 +74,11 @@ class App extends Component {
       });
   }
 
-  openDrawer = (event) => {
+  signOutUser = () => {
     this.setState({
-      drawerOpen: !this.state.drawerOpen
-    });
+      loggedIn: false,
+      username: ''
+    })
   }
 
   render() {
@@ -89,14 +89,17 @@ class App extends Component {
           <Switch>
             <Route path="/login" component={Login} onUsernameChange={this.onUsernameChange} />
             <Route path='/addFeedback' component ={CreateFeedback} />
-            <Route path="/register" component={Register} />
+            <Route path="/register" component={Register} onUsernameChange={this.onUsernameChange} />
             <Route path="/resetpassword" component={PasswordRecovery} />
             <Route path='/result' >
               <SearchedResult feedbackList={this.state.feedbacks} keywords='blue submarine' />
             </Route>
-            <Route path="/" render={() => <Dashboard feedbacks={this.state.feedbacks}
+            <Route path="/" render={() => <Dashboard 
+             feedbacks={this.state.feedbacks}
+             signOutUser={this.signOutUser}
              onUsernameChange={this.onUsernameChange}
-             loggedIn={this.state.loggedIn}/>} />
+             loggedIn={this.state.loggedIn}/>}
+              />
           </Switch>
          </UsernameContext.Provider>
         </Router>

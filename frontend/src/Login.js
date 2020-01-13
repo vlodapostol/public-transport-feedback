@@ -10,7 +10,7 @@ import App from './App';
 import axios from 'axios';
 import './App.css';
 
-const ip = "18.197.27.165"
+const ip = "52.59.237.162"
 
 class Login extends React.Component {
     constructor(props) {
@@ -22,7 +22,8 @@ class Login extends React.Component {
             toRegister: false,
             toResetPassword: false,
             loggedIn: this.props.location.state.loggedIn,
-            authSuccessful: false
+            authSuccessful: false,
+            redirectToAdd: false
         };
         this.onUsernameChange = this.props.location.userNameCallback;
     }
@@ -42,6 +43,10 @@ class Login extends React.Component {
                 }
             }).catch(err => {
                 console.log(err.message);
+                this.refs.userNameTf.state.errorText = 'Please check your username';
+                this.refs.passwordTf.state.errorText = 'Please check your password';
+                this.refs.passwordTf.focus();
+                this.refs.userNameTf.focus();
             });
 
     }
@@ -66,12 +71,14 @@ class Login extends React.Component {
                 <div>
                 <AppBar title="Login" showMenuIconButton={false}/>
                     <TextField 
+                    ref='userNameTf'
                     hintText="Enter username"
                     floatingLabelText="Username"
                     onChange = {(event,newValue) => this.setState({username:newValue})}
                     />
                     <br/>
                     <TextField 
+                    ref='passwordTf'
                     type="password"
                     hintText="Enter password"
                     floatingLabelText="Password"
