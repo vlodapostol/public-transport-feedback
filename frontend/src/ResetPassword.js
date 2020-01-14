@@ -11,7 +11,6 @@ import axios from "axios";
 const ip = "18.184.87.37";
 
 class ResetPassword extends React.Component {
-<<<<<<< HEAD
     constructor(props) {
         super(props);
         this.state = {
@@ -44,43 +43,8 @@ class ResetPassword extends React.Component {
                     console.log(err.message);
                 });
         }
-=======
-  constructor(props) {
-    super(props);
-    this.state = {
-      recoveryCode: props.resetCode,
-      email: props.email,
-      typedCode: "",
-      newPassword: "",
-      finishedReset: false
-    };
-  }
-
-  handleClickReset(event) {
-    var apiUrl = "http://" + ip + ":3001/api/resetpassword/" + this.state.email;
-    var payload = {
-      email: this.state.email,
-      newPassword: this.state.newPassword
-    };
-    if (this.state.typedCode == this.state.recoveryCode) {
-      axios
-        .put(apiUrl, payload)
-        .then(response => {
-          if (response.status == 200) {
-            this.setState({
-              finishedReset: true
-            });
-            console.log("password updated");
-          }
-        })
-        .catch(err => {
-          console.log(err.message);
-        });
->>>>>>> fc5a13d5bd1d37ceab191fca390815d232e45ab2
     }
-  }
 
-<<<<<<< HEAD
     render() {
         if (this.state.finishedReset === true) {
             return <Redirect to="/" />;
@@ -88,15 +52,6 @@ class ResetPassword extends React.Component {
 
         return (
             <div>
-=======
-  render() {
-    if (this.state.finishedReset === true) {
-      return <Redirect to="/" />;
-    }
-
-    return (
-      <div>
->>>>>>> fc5a13d5bd1d37ceab191fca390815d232e45ab2
         <MuiThemeProvider>
           <div>
             <AppBar title="Reset password" showMenuIconButton={false} />
@@ -126,12 +81,12 @@ class ResetPassword extends React.Component {
           </div>
         </MuiThemeProvider>
       </div>
-    );
-  }
+        );
+    }
 }
 
 const style = {
-  margin: 15
+    margin: 15
 };
 
 export default ResetPassword;
