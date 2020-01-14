@@ -16,6 +16,7 @@ class FeedbackList extends React.Component {
         this.state = {
             feedbacks: props.feedbacks
         };
+        this.onSelectedRowsChange = props.onSelectedRowsChange;
     }
 
     componentDidUpdate = (prevProps) => {
@@ -28,24 +29,44 @@ class FeedbackList extends React.Component {
 
 
     render() {
-        const feedbacks = this.state.feedbacks.map((feedback, index) =>
-            <TableRow>
-                    <TableRowColumn><span>{feedback.author}</span></TableRowColumn>
-                    <TableRowColumn><span>{feedback.startingPoint}</span></TableRowColumn>
-                    <TableRowColumn><span>{feedback.destinationPoint}</span></TableRowColumn>
-                    <TableRowColumn><span>{feedback.transportType}</span></TableRowColumn>
-                    <TableRowColumn><span>{feedback.departureHour}</span></TableRowColumn>
-                    <TableRowColumn><span>{feedback.tripDuration} </span></TableRowColumn>
-                    <TableRowColumn><span>{feedback.crowdednessLevel} </span></TableRowColumn>
-                    <TableRowColumn><span>{feedback.observations}</span></TableRowColumn>
-                    <TableRowColumn><span>{feedback.satisfactionLevel}</span></TableRowColumn>
+        let feedbacks = this.state.feedbacks;
+        let feedbacks1 = [];
+        for (let i = 0; i < feedbacks.length; i++) {
+            let currEl = feedbacks[i];
+            let satisfactionLevel = '';
+            switch (currEl.satisfactionLevel) {
+                case 1:
+                    satisfactionLevel = 'Sad';
+                    break;
+                case 2:
+                    satisfactionLevel = 'Neutral';
+                    break;
+                case 3:
+                    satisfactionLevel = 'Happy';
+                    break;
+            }
+            feedbacks1.push(
+                <TableRow>
+                    <TableRowColumn><span>{currEl.author}</span></TableRowColumn>
+                    <TableRowColumn><span>{currEl.startingPoint}</span></TableRowColumn>
+                    <TableRowColumn><span>{currEl.destinationPoint}</span></TableRowColumn>
+                    <TableRowColumn><span>{currEl.transportType}</span></TableRowColumn>
+                    <TableRowColumn><span>{currEl.departureHour}</span></TableRowColumn>
+                    <TableRowColumn><span>{currEl.tripDuration} </span></TableRowColumn>
+                    <TableRowColumn><span>{currEl.crowdednessLevel} </span></TableRowColumn>
+                    <TableRowColumn><span>{currEl.observations}</span></TableRowColumn>
+                    <TableRowColumn><span>{satisfactionLevel}</span></TableRowColumn>
                 </TableRow>
-        );
+            )
+        }
 
         return (
             <div>
             <MuiThemeProvider>
-                <Table>
+                <Table ref='table' multiSelectable={true} onRowSelection={(selectedRows) => {
+                    this.onSelectedRowsChange(selectedRows)
+                    console.log(this.refs.table.props.children[1].props.children[0]);
+                }}>
                 <TableHeader>
                     <TableRow>
                         <TableHeaderColumn>Author</TableHeaderColumn>
@@ -60,7 +81,7 @@ class FeedbackList extends React.Component {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                {feedbacks}
+                {feedbacks1}
                 </TableBody>
                 </Table>
           </MuiThemeProvider>

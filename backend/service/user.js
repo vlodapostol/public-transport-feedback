@@ -1,5 +1,5 @@
 const { User } = require("../models/models");
-var nodemailer = require('nodemailer');
+
 const sendmail = require('sendmail')();
 
 
@@ -84,19 +84,50 @@ const user = {
     reset: async(email) => {
         try {
             var randomCode = Math.floor(Math.random() * 1000000);
-            var stringCode = parseInt(randomCode);
 
-            sendmail({
-                from: 'webabes1090@gmail.com',
+            // sendmail({
+            //     from: 'webabes1090@gmail.com',
+            //     to: email,
+            //     subject: 'WEBabes Feedback Recovery Code',
+            //     html: 'Your recovery code: ' + randomCode,
+            // }, function(err, reply) {
+            //     console.log(err && err.stack);
+            //     console.dir(reply);
+            // });
+
+            const send = require('gmail-send')({
+                user: 'webabes1090@gmail.com',
+                pass: 'webTech123',
                 to: email,
                 subject: 'WEBabes Feedback Recovery Code',
-                html: 'Your recovery code: ' + randomCode,
-            }, function(err, reply) {
-                console.log(err && err.stack);
-                console.dir(reply);
             });
 
+            send({
+                text: 'Your recovery code: ' + randomCode,
+            }, (error, result, fullResult) => {
+                if (error) console.error(error);
+                console.log(result);
+            })
+
             return randomCode;
+        }
+        catch (err) {
+            throw new Error(err.message);
+        }
+    },
+    updatePassword: async(userEmail, newPassword) => {
+        try {
+            let user = await User.findOne({
+                where: {
+                    email: userEmail
+                }
+            });
+
+            if (user) {
+                user.password = newPassword;
+
+                await user.save();
+            }
         }
         catch (err) {
             throw new Error(err.message);

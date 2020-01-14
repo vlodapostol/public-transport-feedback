@@ -21,7 +21,8 @@ class Register extends React.Component {
         };
     }
 
-    handleClickRegister(event) {
+    handleRegisterClick() {
+        console.log(this);
         var apiUrl = "http://" + ip + ":3001/api/register";
         var payload = {
             "username": this.state.username,
@@ -47,7 +48,10 @@ class Register extends React.Component {
     render() {
 
         if (this.state.finishedRegistration === true) {
-            return <Redirect to="/login" />
+            return <Redirect to={{
+            path: "/login",
+            state: {loggedIn: false}
+            }}/>
         }
 
         return (
@@ -76,7 +80,9 @@ class Register extends React.Component {
              onChange = {(event,newValue) => this.setState({password:newValue})}
              />
            <br/>
-           <RaisedButton label="Register" primary={true} style={style} onClick={this.handleClickRegister}/>
+           <RaisedButton label="Register" primary={true} style={style} onClick={() => {
+                this.handleRegisterClick();
+            }}/>
           </div>
          </MuiThemeProvider>
       </div>

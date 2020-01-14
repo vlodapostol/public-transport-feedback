@@ -61,8 +61,8 @@ class CreateFeedback extends React.Component {
     }
 
     render() {
-        if (redirectToDashboard) {
-            <Redirect to='/' />
+        if (this.state.redirectToDashboard) {
+            return <Redirect to='/' />
         }
 
         return (

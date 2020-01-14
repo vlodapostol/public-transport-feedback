@@ -9,12 +9,18 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import EditIcon from 'material-ui/svg-icons/image/edit';
 
 import FeedbackList from './FeedbackList';
 import Loggin from './Loggin';
 import LoggedIn from './LoggedIn';
 
+import axios from 'axios';
+
 import { Redirect } from 'react-router-dom';
+
+const ip = "52.59.237.162"
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -24,7 +30,9 @@ class Dashboard extends React.Component {
             drawerOpen: false,
             feedbacks: props.feedbacks,
             redirectToAdd: false,
-            username: this.props.username
+            username: this.props.username,
+            selectedRows: '',
+            myFeedbacksShown: false
         }
         this.onFeedbackAdded = props.onFeedbackAdded;
         this.onUsernameChange = props.onUsernameChange;
@@ -45,6 +53,10 @@ class Dashboard extends React.Component {
         }
     }
 
+    onSelectedRowsChange = (rows) => {
+        this.setState({ selectedRows: rows });
+    }
+
     render() {
         const fabStyle = {
             margin: '5px 15px 0px 0px',
@@ -54,7 +66,27 @@ class Dashboard extends React.Component {
         let myFeedbacks = '';
 
         if (this.state.loggedIn) {
-            myFeedbacks = <MenuItem onClick={() => {}}>Show my feedbacks</MenuItem>;
+            myFeedbacks =
+                <div>
+                <MenuItem onClick={() => {
+                    console.log(this.state.username);
+                    axios.get('http://' + ip + ':3001/api/user/' + this.state.username + '/feedback')
+                        .then((result) => {
+                            this.setState({feedbacks: result.data, myFeedbacksShown: true});
+                        }).catch(err => {
+                            console.log(err);
+                        })
+                    
+                }}>Show my feedbacks</MenuItem>
+                <MenuItem onClick={ () => {
+                    axios.get('http://' + ip + ':3001/api/feedback/getall')
+                        .then(feedbacks => {
+                            this.setState({ feedbacks: feedbacks.data, myFeedbacksShown: false });
+                        }).catch(err => {
+                            console.log(err); 
+                        });
+                }}>Show all feedbacks</MenuItem>
+                </div>
         }
 
         if (this.state.redirectToAdd) {
@@ -81,15 +113,25 @@ class Dashboard extends React.Component {
                     docked={false}
                     width={200}
                     onRequestChange={(drawerOpen) => this.setState({drawerOpen})}>
-                    <MenuItem>Add feedback</MenuItem>
+                    <MenuItem>Search</MenuItem>
                     {myFeedbacks}
                   </Drawer>
                   <FloatingActionButton style={fabStyle} onClick={(ev) => {this.setState({redirectToAdd: true})}}>
                     <ContentAdd />
                   </FloatingActionButton>
+                  { this.state.loggedIn && this.state.myFeedbacksShown && 
+                  <div>
+                    <FloatingActionButton backgroundColor='GoldenRod' style={{float: 'right', margin: '66px -56px 0px 0px'}} onClick={() => {this.handleDelete();}}>
+                        <EditIcon />
+                    </FloatingActionButton>
+                    <FloatingActionButton backgroundColor='red' style={{float: 'right', margin: '130px -56px 0px 0px'}}>
+                        <DeleteIcon />
+                    </FloatingActionButton>
+                   </div>
+                  }
                 </div>
               </MuiThemeProvider>
-              <FeedbackList feedbacks={this.state.feedbacks} />
+              <FeedbackList onSelectedRowsChange={this.onSelectedRowsChange} feedbacks={this.state.feedbacks} />
               </div>
         );
     }

@@ -79,7 +79,7 @@ const modifyUser = async(request, response, next) => {
         await userService.update(request.body);
 
         response.status(200).json({
-            message: `user updated successfully`
+            message: `password updated successfully`
         });
     }
     catch (err) {
@@ -113,16 +113,33 @@ const resetPassword = async(request, response, next) => {
 
         const randomCode = await userService.reset(email);
 
-        if (response) {
-            response.status(200).json({
-                message: "recovery code mail sent to " + email
-            });
-        }
+        response.status(200).json({
+            code: randomCode
+        });
     }
     catch (err) {
-        response.status(404).json({
+        response.status(400).json({
             message: "could not send email" + err.message
         });
+    }
+}
+
+const updatePassword = async(request, response, next) => {
+    try {
+        const email = request.params.email;
+        const newPassword = request.body.newPassword;
+        console.log(email);
+        console.log(newPassword);
+        await userService.updatePassword(email, newPassword);
+
+        response.status(200).json({
+            message: "password updated"
+        });
+    }
+    catch (err) {
+        response.status(400).json({
+            message: "could't reset password " + err.message
+        })
     }
 }
 
@@ -133,5 +150,6 @@ module.exports = {
     disableUser,
     modifyUser,
     authUser,
-    resetPassword
+    resetPassword,
+    updatePassword
 }

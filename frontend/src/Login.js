@@ -52,9 +52,8 @@ class Login extends React.Component {
     }
 
     render() {
-
-        if (this.state.authSuccessful === true) {
-            return <Redirect to='/' />
+        if (this.state.authSuccessful) {
+            return <Redirect to='/' />;
         }
 
         if (this.state.toRegister === true) {
