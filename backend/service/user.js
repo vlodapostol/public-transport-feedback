@@ -39,10 +39,10 @@ const user = {
             throw new Error(err.message);
         }
     },
-    disable: async(id) => {
+    disable: async(userName) => {
         try {
-            let user = await User.findByPk(id);
-            user.disable = true;
+            let user = await User.findOne({ where: { 'username': userName } });
+            user.isEnabled = false;
             await user.save();
 
             return user;
@@ -51,10 +51,10 @@ const user = {
             throw new Error(err.message);
         }
     },
-    enable: async(id) => {
+    enable: async(userName) => {
         try {
-            let user = await User.findByPk(id);
-            user.disable = false;
+            let user = await User.findOne({ where: { 'username': userName } });
+            user.isEnabled = true;
             await user.save();
 
             return user;

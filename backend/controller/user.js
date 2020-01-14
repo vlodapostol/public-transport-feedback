@@ -44,8 +44,8 @@ const getUserById = async(request, response, next) => {
 
 const disableUser = async(request, response, next) => {
     try {
-        const id = request.params.id;
-        const user = await userService.disable(id);
+        const username = request.params.username;
+        const user = await userService.disable(username);
 
         response.status(200).json({
             message: `user with email address ${user.email} has been disabled`
@@ -60,8 +60,8 @@ const disableUser = async(request, response, next) => {
 
 const enableUser = async(request, response, next) => {
     try {
-        const id = request.params.id;
-        const user = await userService.enable(id);
+        const username = request.params.username;
+        const user = await userService.enable(username);
 
         response.status(200).json({
             message: `user with email address ${user.email} has been enabled`
@@ -94,10 +94,20 @@ const authUser = async(request, response, next) => {
         const user = request.body;
         console.log(user);
         const responseUser = await userService.authUser(user.username, user.password);
+        console.log(responseUser.isEnabled);
         if (user.username === responseUser.username) {
-            response.status(200).json({
-                message: 'user auth succesfull'
-            });
+            if (responseUser.isEnabled) {
+                response.status(200).json({
+                    message: 'user auth succesfull',
+                    disabled: false
+                });
+            }
+            else {
+                response.status(200).json({
+                    message: 'user is disabled',
+                    disabled: true
+                })
+            }
         }
     }
     catch (err) {
@@ -128,8 +138,7 @@ const updatePassword = async(request, response, next) => {
     try {
         const email = request.params.email;
         const newPassword = request.body.newPassword;
-        console.log(email);
-        console.log(newPassword);
+
         await userService.updatePassword(email, newPassword);
 
         response.status(200).json({
@@ -138,7 +147,7 @@ const updatePassword = async(request, response, next) => {
     }
     catch (err) {
         response.status(400).json({
-            message: "could't reset password " + err.message
+            message: "could not reset password " + err.message
         })
     }
 }

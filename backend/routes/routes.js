@@ -9,7 +9,7 @@ router.post("/login", userController.authUser);
 router.get("/user/:id", userController.getUserById);
 router.put("/user/:id/update", userController.modifyUser);
 router.put("/user/:id/enable", userController.enableUser);
-router.put("/user/:id/disable", userController.disableUser);
+router.put("/user/:username/disable", userController.disableUser);
 router.post("/resetpassword", userController.resetPassword)
 router.put("/resetpassword/:email", userController.updatePassword)
 
