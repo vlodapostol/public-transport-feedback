@@ -1,14 +1,30 @@
-Team name: WEBabes 
+# Public transport feedback
 
-Team topic: "Web Application for Sharing Public Transport Experiences"
+A small web app that was built for educational purposes as a team project for a web technologies course.
+The application provides the ability for anonymous users and registered ones to give feedback about different public transports with different details.
 
-Team members: 
+## Technologies used
 
-1)Schpak Ana-Maria - Project Manager
+### Back-end
++ Node.JS
++ Express.js
++ Sequelize
 
-2)Apostol Vlad-Eugen - Product Owner
+The back-end acts as a REST API that was built following the MVC pattern and which uses MySQL database for data persistence.
 
-3)Chirigiu Delia-Maria - Developer
+### Front-end
++ ReactJS
++ Material-UI
 
-4)Cazacu Andrei-Robert - Developer
+## Authors and acknowledgment
++ [anamariaschpak](https://github.com/anamariaschpak)
++ [mesodel](https://github.com/mesodel)
++ [andreiczc](https://github.com/andreiczc)
++ [vlodapostol](https://github.com/vlodapostol)
 
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+[GPL-3.0](https://choosealicense.com/licenses/gpl-3.0/)
